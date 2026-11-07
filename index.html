@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<meta name="x5-orientation" content="portrait">
+<meta name="screen-orientation" content="portrait">
+<meta name="theme-color" content="#05060d">
+<title>收到了一个祝福</title>
+<style>
+:root{--bg:#f4f4f4;--ring:#d9d9d9;--sub:#8a8a8a;--tx:#2a2a2e;--g:#141a3a;--s:255,190,70;color-scheme:light dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15161c;--ring:#34363f;--sub:#8e8e93;--tx:#eee}}
+:root[data-theme="dark"]{--bg:#15161c;--ring:#34363f;--sub:#8e8e93;--tx:#eee}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+@supports(height:100dvh){html,body{height:100dvh}}
+body{background:var(--bg);font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;overflow:hidden;transition:background 1s;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;-webkit-text-size-adjust:100%;touch-action:manipulation;overscroll-behavior:none}
+body.on{background:#05060d}
+#start{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .9s}
+body.on #start{opacity:0;pointer-events:none}
+#t1{color:var(--tx);font-size:15px;letter-spacing:.4em;opacity:.75}
+#cd{color:var(--sub);font-size:13px;letter-spacing:.2em;margin:8px 0 28px}
+.wrap{position:relative;width:min(80vw,320px);aspect-ratio:1;display:grid;place-items:center}
+.ring{position:absolute;inset:0;border:2px solid var(--ring);border-radius:50%;animation:spin 6s ease-in-out infinite alternate}
+.ring.b{inset:-5%;opacity:.5;animation-duration:8s;animation-direction:alternate-reverse}
+@keyframes spin{from{transform:translate(0,6%) scale(1)}to{transform:translate(0,2%) scale(1.04)}}
+#go{width:76%;aspect-ratio:1;border:0;border-radius:50%;color:#fff;font-size:clamp(28px,9vw,40px);font-weight:700;line-height:1.35;letter-spacing:.05em;cursor:pointer;background:linear-gradient(135deg,#b88cf0,#5f8ae6 70%,#4fb0e8);box-shadow:0 0 60px 18px rgba(95,138,230,.35);animation:pulse 2.6s ease-in-out infinite;font-family:inherit;transition:transform .3s}
+#go:active{transform:scale(.94)}
+@keyframes pulse{50%{transform:scale(1.04);box-shadow:0 0 80px 26px rgba(95,138,230,.45)}}
+#hint{margin-top:22px;color:var(--sub);letter-spacing:.35em;font-size:14px;animation:breathe 3s ease-in-out infinite}
+@keyframes breathe{50%{opacity:.45}}
+#sub2{margin-top:10px;color:var(--sub);font-size:13px;letter-spacing:.3em;opacity:.8}
+#start{isolation:isolate;overflow:hidden}
+.orb{position:absolute;z-index:-1;width:70vmin;height:70vmin;border-radius:50%;filter:blur(60px);opacity:.4;animation:float 12s ease-in-out infinite alternate;pointer-events:none}
+.o1{top:-12%;left:-22%;background:#b88cf0}
+.o2{bottom:-12%;right:-22%;background:#5fb0e8;animation-delay:-6s}
+@keyframes float{to{transform:translate(10vw,6vh) scale(1.15)}}
+#seal{position:absolute;z-index:-1;top:9%;font-size:min(48vw,210px);font-weight:800;letter-spacing:.08em;color:var(--tx);opacity:.045;pointer-events:none}
+.orbit{position:absolute;inset:-5%;animation:rot 9s linear infinite}
+.orbit i{position:absolute;top:-4px;left:50%;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:#ffc94d;box-shadow:0 0 12px 4px rgba(255,190,70,.7)}
+@keyframes rot{to{transform:rotate(360deg)}}
+body.on #go{animation:none;transform:scale(5);opacity:0;transition:transform 1s ease-in,opacity .9s}
+#stage{position:absolute;inset:0;max-width:520px;margin:0 auto;opacity:0;pointer-events:none;transition:opacity 1s;background:radial-gradient(120% 70% at 50% 0%,var(--g) 0%,transparent 70%)}
+body.on #stage{opacity:1;pointer-events:auto}
+#cv{position:absolute;inset:0;width:100%;height:100%}
+#sun{position:absolute;left:50%;bottom:-30%;width:150%;aspect-ratio:1;transform:translate(-50%,40%);border-radius:50%;background:radial-gradient(circle,rgba(var(--s),.5) 0%,rgba(var(--s),.15) 35%,transparent 65%);opacity:0;transition:opacity 4s,transform 5s cubic-bezier(.2,.7,.2,1);pointer-events:none}
+#sun.rise{opacity:1;transform:translate(-50%,0)}
+.w{position:absolute;color:#fff;font-weight:600;white-space:nowrap;opacity:0;transform:translate(-50%,-50%) scale(.8);filter:blur(4px);transition:opacity 1.2s,transform 1.2s,filter 1.2s;animation:drift 5s ease-in-out infinite alternate;animation-delay:var(--d,0s)}
+.w.g{color:#ffe08a}
+.w.show{opacity:var(--o,1);transform:translate(-50%,-50%) scale(1);filter:none}
+.w.pop{transform:translate(-50%,-50%) scale(1.35);color:#ffd60a;opacity:1}
+@keyframes drift{from{translate:0 -4px}to{translate:0 4px}}
+#main{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-weight:800;font-size:clamp(22px,7.6vw,36px);white-space:nowrap;min-height:1.4em;background:linear-gradient(180deg,#fff2a8,#ffc20a 60%,#ff9d00);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 16px rgba(255,190,20,.45));pointer-events:none}
+#main.glow{animation:glow 3s ease-in-out infinite alternate}
+@keyframes glow{to{filter:drop-shadow(0 0 28px rgba(255,190,20,.8))}}
+#sig{position:absolute;left:0;right:0;top:58%;text-align:center;color:#f3dfb0;font-size:14px;letter-spacing:.2em;line-height:2;opacity:0;transition:opacity 2s;pointer-events:none}
+#sig.show{opacity:.9}
+#bar{position:fixed;left:0;right:0;bottom:calc(34px + env(safe-area-inset-bottom,0px));display:none;justify-content:center;gap:8px;z-index:5}
+body.on #bar{display:flex}
+@media(max-width:360px){#bar{gap:5px}#bar button{padding:8px 10px!important;font-size:13px!important}}
+#bar button{padding:9px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.7);background:rgba(0,0,0,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:#fff;font-size:14px;font-family:inherit;cursor:pointer}
+#foot{position:fixed;left:0;right:0;bottom:calc(10px + env(safe-area-inset-bottom,0px));text-align:center;font-size:12px;color:#666;opacity:0;transition:opacity 1s}
+body.on #foot{opacity:1}
+#dlg{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:9}
+#dlg.open{display:flex}
+#dlg div.c{width:min(84vw,340px);background:#1c1d26;border-radius:18px;padding:22px;color:#fff;user-select:auto;-webkit-user-select:auto}
+#dlg p{margin:0 0 8px;font-size:15px}
+#dlg input{width:100%;font-size:16px;padding:12px;margin-bottom:12px;border-radius:10px;border:1px solid #444;background:#0e0f15;color:#fff;font-family:inherit}
+#dlg .r{display:flex;gap:10px;margin-top:6px}
+#dlg button{flex:1;padding:12px;border:0;border-radius:10px;font-size:16px;font-family:inherit;cursor:pointer;background:#33343f;color:#fff}
+#dlg button.ok{background:linear-gradient(135deg,#b88cf0,#5f8ae6)}
+#wx{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;z-index:20;color:#fff;text-align:right;padding:calc(14px + env(safe-area-inset-top,0px)) 22px;font-size:17px;line-height:1.9}#wx.open{display:block}#wx b{display:block;font-size:36px;margin-right:4px}#wx small{opacity:.6;font-size:13px}
+#toast{position:fixed;left:50%;top:calc(70px + env(safe-area-inset-top,0px));transform:translateX(-50%);background:rgba(255,255,255,.15);color:#fff;padding:8px 16px;border-radius:20px;font-size:14px;opacity:0;transition:opacity .4s;z-index:10;pointer-events:none}
+#toast.s{opacity:1}
+@media (prefers-reduced-motion:reduce){.w,#go,.ring,#main,.orb,.orbit,#hint{animation:none!important}}
+</style>
+</head>
+<body>
+<div id="start">
+  <div class="orb o1"></div><div class="orb o2"></div><div id="seal">冬至</div>
+  <div id="t1">冬至 · 一阳复始</div><div id="cd"></div>
+  <div class="wrap"><div class="ring b"></div><div class="ring"></div><div class="orbit"><i></i></div><button id="go">开启<br>冬至</button></div>
+  <div id="hint">点击此处开启你的冬至</div><div id="sub2">长夜将尽 · 暖阳可期</div>
+</div>
+<div id="stage"><canvas id="cv"></canvas><div id="sun"></div><div id="main"></div><div id="sig"></div></div>
+<div id="bar"><button id="edit">署名</button><button id="theme">换景</button><button id="snd">音效 开</button><button id="shr">分享</button><button id="more">重播</button></div>
+<div id="foot">内容仅供展示与娱乐 · 点按夜空有惊喜</div>
+<div id="dlg"><div class="c"><p>送给谁？</p><input id="nm" maxlength="8" placeholder="留空则为“你”"><p>署名（可留空）</p><input id="fr" maxlength="10" placeholder="你的名字"><div class="r"><button id="no">取消</button><button class="ok" id="ok">确定</button></div></div></div>
+<div id="wx"><b>↗</b>点击右上角 “···”<br>选择“发送给朋友”或“分享到朋友圈”<br><small>轻点任意处关闭</small></div>
+<div id="toast"></div>
+<script>
+var WORDS=["平安","阖家团圆","福星至","吉祥","冬日安康","三冬皆暖","岁月长安","团圆","饺子暖心","一阳复始","万事胜意","喜乐","福至","阳生春近","吉祥至","汤圆圆满","冬日安","平安康至","春归有期","心有暖阳","辉煌至","常安常乐","冬安康","岁暖人安","美好萌新","鸿运至","冬日福至","暖冬","顺遂","冬日快乐","安康","寒去暖来","顺遂无忧","财源至","万事顺安"];
+var GOLD=["一阳复始","阳生春近","春归有期","心有暖阳","团圆","饺子暖心","汤圆圆满"];
+var THEMES=[["夜空","#141a3a","255,190,70"],["暖炉","#3d1214","255,100,50"],["青玉","#0e2b2c","255,225,130"]];
+var name="你",from="",ti=0,muted=false,timers=[],typer=null,ac=null;
+var stage=document.getElementById("stage"),main=document.getElementById("main"),sun=document.getElementById("sun"),sig=document.getElementById("sig");
+var reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
+function $(i){return document.getElementById(i)}
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+function toast(s){var t=$("toast");t.textContent=s;t.classList.add("s");setTimeout(function(){t.classList.remove("s")},1800)}
+function buzz(){try{navigator.vibrate&&navigator.vibrate(12)}catch(e){}}
+
+/* countdown */
+(function(){var d=Math.ceil((Date.UTC(2026,11,21,16,0)-Date.now())/864e5);$("cd").textContent=d>0?"距冬至还有 "+d+" 天":d>-1?"今天冬至":"冬至快乐"})();
+
+/* sound */
+var NOTES=[523,587,659,784,880,1047,1175];
+function tone(f,v,d){if(muted||!ac)return;var o=ac.createOscillator(),g=ac.createGain(),t=ac.currentTime;o.type="sine";o.frequency.value=f;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+d)}
+function chime(v){tone(NOTES[Math.floor(Math.random()*NOTES.length)],v||.05,1.6)}
+
+/* canvas: stars, snow, sparks, shooting stars */
+var cv=$("cv"),cx=cv.getContext("2d"),P=[],raf=0,nextShoot=0;
+function initCv(){
+  var d=Math.min(devicePixelRatio||1,2),W=stage.clientWidth,H=stage.clientHeight;
+  cv.width=W*d;cv.height=H*d;cx.setTransform(d,0,0,d,0,0);P=[];
+  for(var i=0;i<70;i++)P.push({t:0,x:Math.random()*W,y:Math.random()*H*.7,r:Math.random()*1.2+.3,p:Math.random()*6});
+  for(var j=0;j<40;j++)P.push({t:1,x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.8+.8,vy:.25+Math.random()*.5,vx:(Math.random()-.5)*.3});
+}
+function burst(x,y,n){for(var i=0;i<n;i++){var a=Math.random()*6.283,s=1+Math.random()*3;P.push({t:2,x:x,y:y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,l:1,r:1+Math.random()*1.5})}}
+function frame(ts){
+  var W=stage.clientWidth,H=stage.clientHeight;cx.clearRect(0,0,W,H);
+  if(!reduce&&ts>nextShoot){nextShoot=ts+4000+Math.random()*6000;P.push({t:3,x:Math.random()*W*.8+W*.2,y:Math.random()*H*.3,vx:-6,vy:3,l:1})}
+  for(var i=P.length-1;i>=0;i--){
+    var p=P[i];
+    if(p.t===0){cx.globalAlpha=.35+.35*Math.sin(ts/900+p.p);cx.fillStyle="#fff";cx.beginPath();cx.arc(p.x,p.y,p.r,0,6.283);cx.fill()}
+    else if(p.t===1){cx.globalAlpha=.55;if(!reduce){p.y+=p.vy;p.x+=p.vx+Math.sin(ts/1500+p.r)*.15;if(p.y>H){p.y=-4;p.x=Math.random()*W}}cx.fillStyle="#fff";cx.beginPath();cx.arc(p.x,p.y,p.r,0,6.283);cx.fill()}
+    else if(p.t===2){p.x+=p.vx;p.y+=p.vy;p.vy+=.06;p.l-=.02;if(p.l<=0){P.splice(i,1);continue}cx.globalAlpha=p.l;cx.fillStyle="#ffd60a";cx.beginPath();cx.arc(p.x,p.y,p.r,0,6.283);cx.fill()}
+    else{p.x+=p.vx;p.y+=p.vy;p.l-=.02;if(p.l<=0){P.splice(i,1);continue}cx.globalAlpha=p.l;cx.strokeStyle="#fff";cx.lineWidth=1.5;cx.beginPath();cx.moveTo(p.x,p.y);cx.lineTo(p.x-p.vx*7,p.y-p.vy*7);cx.stroke()}
+  }
+  raf=requestAnimationFrame(frame);
+}
+
+function build(){
+  stage.querySelectorAll(".w").forEach(function(n){n.remove()});
+  main.textContent="";main.classList.remove("glow");sun.classList.remove("rise");sig.classList.remove("show");
+  var W=stage.clientWidth,H=stage.clientHeight,cols=3,rows=11,top=H*.2,bot=H*.8,cw=W/cols,ch=(bot-top)/rows,mid=Math.floor(rows/2),cells=[];
+  for(var r=0;r<rows;r++){if(r===mid)continue;for(var c=0;c<cols;c++)cells.push([r,c])}
+  shuffle(cells);var words=shuffle(WORDS.slice()),els=[];
+  cells.forEach(function(cell,i){
+    var e=document.createElement("div"),w=words[i%words.length];
+    e.className="w"+(GOLD.indexOf(w)>-1?" g":"");e.textContent=w;
+    e.style.left=(cell[1]*cw+cw/2+(Math.random()-.5)*cw*.35)+"px";
+    e.style.top=(top+cell[0]*ch+ch/2+(Math.random()-.5)*ch*.4)+"px";
+    e.style.fontSize=(15+Math.random()*5)+"px";
+    e.style.setProperty("--o",(.5+Math.random()*.5).toFixed(2));
+    e.style.setProperty("--d",(-Math.random()*5).toFixed(2)+"s");
+    stage.appendChild(e);els.push(e);
+  });
+  return els;
+}
+
+function play(){
+  timers.forEach(clearTimeout);clearInterval(typer);timers=[];
+  var els=build(),text="冬日快乐，祝福"+name+"…",gap=reduce?20:130;
+  els.forEach(function(e,i){timers.push(setTimeout(function(){e.classList.add("show");if(i%3===0)chime(.035)},500+i*gap))});
+  var t0=700+els.length*gap;
+  timers.push(setTimeout(function(){
+    sun.classList.add("rise");var k=0;
+    typer=setInterval(function(){main.textContent=text.slice(0,++k);if(k%2)tone(NOTES[k%NOTES.length]*.5,.04,1.2);
+      if(k>=text.length){clearInterval(typer);main.classList.add("glow");buzz();
+        var W=stage.clientWidth,H=stage.clientHeight;burst(W/2,H/2,40);[523,659,784,1047].forEach(function(f,n){setTimeout(function(){tone(f,.06,2.4)},n*120)});
+        sig.innerHTML="昼短夜长，自此日渐明亮"+(from?"<br>—— "+from.replace(/[<>&]/g,""):"");sig.classList.add("show")}
+    },140);
+  },t0));
+}
+
+$("go").onclick=function(){
+  buzz();try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();ac.resume()}catch(e){}
+  document.body.classList.add("on");initCv();cancelAnimationFrame(raf);raf=requestAnimationFrame(frame);play();
+};
+stage.addEventListener("pointerdown",function(e){
+  var r=stage.getBoundingClientRect();burst(e.clientX-r.left,e.clientY-r.top,14);chime(.06);
+  if(e.target.classList.contains("w")){e.target.classList.add("pop");var t=e.target;setTimeout(function(){t.classList.remove("pop")},700)}
+});
+$("more").onclick=play;
+$("edit").onclick=function(){$("nm").value=name==="你"?"":name;$("fr").value=from;$("dlg").classList.add("open")};
+$("no").onclick=function(){$("dlg").classList.remove("open")};
+$("ok").onclick=function(){name=$("nm").value.trim()||"你";from=$("fr").value.trim();$("dlg").classList.remove("open");play()};
+$("theme").onclick=function(){ti=(ti+1)%THEMES.length;var t=THEMES[ti],s=document.documentElement.style;s.setProperty("--g",t[1]);s.setProperty("--s",t[2]);toast("已切换：“"+t[0]+"”");chime(.06)};
+$("snd").onclick=function(){muted=!muted;$("snd").textContent=muted?"音效 关":"音效 开"};
+$("shr").onclick=function(){
+  var d={title:"收到了一个祝福",text:"冬日快乐，祝福"+name+"。愿你岁暖人安，一阳复始。"+(from?"——"+from:""),url:location.href};
+  if(/MicroMessenger/i.test(navigator.userAgent)){$("wx").classList.add("open")}
+  else if(navigator.share){navigator.share(d).catch(function(){})}
+  else{try{navigator.clipboard.writeText(d.text+" "+d.url);toast("已复制祝福链接")}catch(e){toast("请手动复制链接")}}
+};
+$("wx").onclick=function(){this.classList.remove("open")};
+document.addEventListener("WeixinJSBridgeReady",function(){try{ac&&ac.resume()}catch(e){}});
+addEventListener("resize",function(){if(document.body.classList.contains("on"))initCv()});
+</script>
+</body>
+</html>
