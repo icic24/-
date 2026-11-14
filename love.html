@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>可以成为我的恋人吗？</title>
+<style>
+:root{--bg:#fff1f2;--ink:#5b1a2b;--sub:#9d4a5f;--heart:#e11d48;--btn:#e11d48;--btn-ink:#fff;--ghost:#fff;--ghost-ink:#7a3347;--line:#f3b8c4;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2a0f18;--ink:#ffe4ea;--sub:#f0a8ba;--heart:#fb5a7c;--btn:#fb5a7c;--btn-ink:#2a0f18;--ghost:#3d1824;--ghost-ink:#ffd0da;--line:#6b2e40}}
+:root[data-theme="dark"]{--bg:#2a0f18;--ink:#ffe4ea;--sub:#f0a8ba;--heart:#fb5a7c;--btn:#fb5a7c;--btn-ink:#2a0f18;--ghost:#3d1824;--ghost-ink:#ffd0da;--line:#6b2e40}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center}
+main{padding:24px;width:100%;max-width:420px}
+.heart{width:120px;height:120px;animation:beat 1.2s ease-in-out infinite}
+@keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.14)}30%{transform:scale(1)}45%{transform:scale(1.08)}}
+h1{font-size:1.7rem;margin:24px 0 8px;letter-spacing:.04em;line-height:1.4}
+#hint{min-height:1.5em;margin:0 0 28px;color:var(--sub);font-size:.95rem}
+.btns{display:flex;gap:20px;justify-content:center;align-items:center;min-height:80px}
+button{font:inherit;border:0;border-radius:999px;cursor:pointer;padding:12px 30px;font-size:1.05rem;transition:transform .15s,font-size .15s,padding .15s}
+button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+#yes{background:var(--btn);color:var(--btn-ink);font-size:1.1rem}
+#yes:active{transform:scale(.95)}
+#no{background:var(--ghost);color:var(--ghost-ink);border:1px solid var(--line)}
+#no.run{position:fixed;z-index:5;transition:left .25s ease-out,top .25s ease-out}
+#done{display:none}
+#done h1{font-size:2rem}
+.fx{position:fixed;top:-30px;pointer-events:none;z-index:10;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:.8}}
+@media (prefers-reduced-motion:reduce){.heart{animation:none}.fx{display:none}}
+</style>
+</head>
+<body>
+<main id="ask">
+  <svg class="heart" viewBox="0 0 100 90" aria-hidden="true"><path fill="var(--heart)" d="M50 86C20 62 4 46 4 28 4 14 15 4 28 4c9 0 17 5 22 13C55 9 63 4 72 4c13 0 24 10 24 24 0 18-16 34-46 58z"/></svg>
+  <h1>可以成为我的恋人吗？</h1>
+  <p id="hint"></p>
+  <div class="btns">
+    <button id="yes">可以</button>
+    <button id="no">不要</button>
+  </div>
+</main>
+<main id="done">
+  <svg class="heart" viewBox="0 0 100 90" aria-hidden="true"><path fill="var(--heart)" d="M50 86C20 62 4 46 4 28 4 14 15 4 28 4c9 0 17 5 22 13C55 9 63 4 72 4c13 0 24 10 24 24 0 18-16 34-46 58z"/></svg>
+  <h1>我就知道你会答应 ❤️</h1>
+  <p style="color:var(--sub)">从今天起，请多多指教，我的恋人。</p>
+</main>
+<script>
+(function(){
+  var yes=document.getElementById('yes'),no=document.getElementById('no'),hint=document.getElementById('hint');
+  var lines=["真的不要吗？","再想想嘛～","别点啦，点不到的","手滑了吗？","“可以”更大更好点哦","你再仔细看看按钮","好吧，其实你是想点“可以”"];
+  var n=0,scale=1;
+  function flee(e){
+    if(e&&e.preventDefault)e.preventDefault();
+    n++;
+    no.classList.add('run');
+    var w=no.offsetWidth,h=no.offsetHeight,pad=12;
+    var x=pad+Math.random()*(innerWidth-w-2*pad);
+    var y=pad+Math.random()*(innerHeight-h-2*pad);
+    no.style.left=x+'px';no.style.top=y+'px';
+    hint.textContent=lines[Math.min(n-1,lines.length-1)];
+    scale=Math.min(scale+.18,2.6);
+    yes.style.transform='scale('+scale+')';
+    yes.style.margin=(scale*8)+'px '+(scale*14)+'px';
+  }
+  no.addEventListener('mouseenter',flee);
+  no.addEventListener('touchstart',flee,{passive:false});
+  no.addEventListener('click',flee);
+  yes.addEventListener('click',function(){
+    no.style.display='none';
+    document.getElementById('ask').style.display='none';
+    document.getElementById('done').style.display='block';
+    var set=['❤️','💖','💕','🌸','✨'];
+    for(var i=0;i<60;i++){
+      var s=document.createElement('span');
+      s.className='fx';
+      s.textContent=set[i%set.length];
+      s.style.left=Math.random()*100+'vw';
+      s.style.fontSize=(16+Math.random()*22)+'px';
+      s.style.animationDuration=(2.5+Math.random()*3)+'s';
+      s.style.animationDelay=(Math.random()*1.5)+'s';
+      document.body.appendChild(s);
+    }
+  });
+})();
+</script>
+</body>
+</html>
