@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#100d25">
+<title>PROJECT HEARTBEAT · 心动信号</title>
+<style>
+:root{--ink:#f9efff;--muted:#c9b8dc;--pink:#ff9ecb;--violet:#c8a8ff;--gold:#ffe4bd}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#100d25;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif}
+body{background:radial-gradient(ellipse at 50% 43%,#38244e 0%,#1b1634 42%,#0b0a1b 100%)}
+#sky{position:fixed;inset:0;width:100%;height:100%;touch-action:pan-y}
+.grain{position:fixed;inset:0;pointer-events:none;opacity:.12;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.3'/%3E%3C/svg%3E")}
+.top{position:fixed;top:calc(22px + env(safe-area-inset-top));left:0;right:0;text-align:center;pointer-events:none}
+.brand{font-size:9px;letter-spacing:.42em;color:#e8c9f7;opacity:.75}
+.topline{width:48px;height:1px;background:linear-gradient(90deg,transparent,#f7c9ed,transparent);margin:12px auto}
+.scene{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:90px 24px 180px;text-align:center;pointer-events:none}
+.content{width:min(100%,440px);pointer-events:auto;animation:rise 1s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.eyebrow{font-size:10px;letter-spacing:.32em;color:#e5c6ef;margin-bottom:16px}
+h1{font-weight:300;font-size:clamp(30px,8vw,43px);line-height:1.38;letter-spacing:.12em;margin:0 0 14px;text-shadow:0 0 28px #f3a8db55}
+p{font-size:14px;line-height:2;color:var(--muted);letter-spacing:.06em;margin:8px auto;max-width:330px}
+.heart-wrap{height:230px;display:flex;align-items:center;justify-content:center;margin:4px auto 12px;position:relative}
+.heart{font-size:112px;line-height:1;filter:drop-shadow(0 0 14px #ff8bc9) drop-shadow(0 0 42px #b887ff);animation:beat 1.65s ease-in-out infinite;user-select:none;cursor:pointer;touch-action:manipulation}
+@keyframes beat{0%,100%{transform:scale(1)}12%{transform:scale(1.12)}23%{transform:scale(.99)}35%{transform:scale(1.08)}50%{transform:scale(1)}}
+.orbit{position:absolute;width:205px;height:205px;border:1px solid #e9b9ed55;border-radius:50%;box-shadow:0 0 35px #c99cff22,inset 0 0 35px #c99cff14;animation:spin 18s linear infinite}
+.orbit:before,.orbit:after{content:"";position:absolute;width:5px;height:5px;border-radius:50%;background:#ffe4bd;box-shadow:0 0 12px #ffe4bd;top:20px;left:32px}
+.orbit:after{top:auto;left:auto;right:15px;bottom:42px;background:#ff9ecb}
+@keyframes spin{to{transform:rotate(360deg)}}
+.actions{display:flex;flex-direction:column;gap:10px;margin:26px auto 0;width:min(100%,290px)}
+button{border:1px solid #ffffff35;border-radius:999px;min-height:48px;padding:0 22px;color:#fff;font-size:14px;letter-spacing:.12em;background:#ffffff0d;backdrop-filter:blur(12px);cursor:pointer;transition:.25s}
+button:active{transform:scale(.97)}
+.primary{background:linear-gradient(110deg,#e98cbd,#a58be9);border:0;color:#24152f;box-shadow:0 8px 30px #d88ac955;font-weight:600}
+.secondary{background:#ffffff0a}
+.smallnote{font-size:10px;color:#a995bd;letter-spacing:.12em;margin-top:16px}
+.panel{position:fixed;left:18px;right:18px;bottom:calc(18px + env(safe-area-inset-bottom));display:flex;justify-content:space-between;align-items:center;pointer-events:none;color:#bca9cd;font-size:10px;letter-spacing:.14em}
+.pill{border:1px solid #ffffff20;border-radius:30px;padding:8px 11px;background:#ffffff09;backdrop-filter:blur(10px);pointer-events:auto}
+.hidden{display:none!important}
+.letter{padding:24px 21px;border:1px solid #ffffff2c;border-radius:22px;background:linear-gradient(145deg,#ffffff15,#ffffff06);box-shadow:0 18px 70px #07051266;backdrop-filter:blur(18px)}
+.letter h2{font-size:24px;font-weight:300;letter-spacing:.16em;margin:0 0 18px;color:#ffe5f2}
+.letter p{font-size:14px;line-height:2.15;text-align:left;color:#f0dced}
+.signature{color:#ffd5e9!important;text-align:right!important;margin-top:16px!important}
+.final-heart{font-size:72px;filter:drop-shadow(0 0 25px #ff8bc9);animation:beat 1.5s infinite}
+.toast{position:fixed;top:calc(76px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);padding:10px 16px;border-radius:30px;background:#281d3be8;border:1px solid #ffffff2c;color:#f9e8f5;font-size:12px;white-space:nowrap;opacity:0;transition:opacity .35s;pointer-events:none}
+.toast.show{opacity:1}
+footer{position:fixed;bottom:calc(58px + env(safe-area-inset-bottom));left:0;right:0;text-align:center;color:#9c8bad;font-size:9px;letter-spacing:.22em;pointer-events:none}
+@media(max-height:700px){.scene{padding-top:70px;padding-bottom:135px}.heart-wrap{height:170px}.heart{font-size:88px}.orbit{width:165px;height:165px}.panel{bottom:calc(9px + env(safe-area-inset-bottom))}footer{display:none}}
+</style>
+</head>
+<body>
+<canvas id="sky"></canvas><div class="grain"></div>
+<header class="top"><div class="brand">P R O J E C T&nbsp; H E A R T B E A T</div><div class="topline"></div></header>
+<main>
+<section class="scene" id="s1"><div class="content">
+ <div class="eyebrow">A MESSAGE FROM MY UNIVERSE</div>
+ <h1>有一颗心<br>想让你听见</h1>
+ <p>在无数颗星星之间，<br>有一束微光，正悄悄为你闪烁。</p>
+ <div class="heart-wrap"><div class="orbit"></div><div class="heart" id="heartTap">♡</div></div>
+ <div class="actions"><button class="primary" id="begin">触碰这颗心，接收心动信号</button></div>
+ <div class="smallnote">轻点爱心 7 次，或许会发现一个秘密</div>
+</div></section>
+<section class="scene hidden" id="s2"><div class="content">
+ <div class="eyebrow">SIGNAL CONNECTED · 01</div>
+ <h1>如果心动<br>有声音</h1>
+ <p>大概就是此刻，<br>星星落进眼睛时的声音。<br><br>我想把一些温柔的瞬间，<br>和一个小小的秘密，分享给你。</p>
+ <div class="actions"><button class="primary" id="toLetter">继续接收这份心意</button><button class="secondary" id="music">♫ 开启轻柔心跳声</button></div>
+</div></section>
+<section class="scene hidden" id="s3"><div class="content">
+ <div class="eyebrow">A LETTER, JUST FOR YOU</div>
+ <div class="letter"><h2>致那个特别的你</h2>
+ <p>其实有些话，在心里练习了很多遍。</p>
+ <p>遇见你之后，平凡的日子好像多了一点光。看到有趣的事，会想第一个分享给你；路过好看的风景，也会忍不住想，如果你在身边就好了。</p>
+ <p>我不想用盛大的词语定义喜欢，只想认真地告诉你：你的出现，让我的世界变得更加柔软、明亮。</p>
+ <p>所以今天，想把这份藏了很久的心意，轻轻交到你手里。</p>
+ <p class="signature">—— 一个认真喜欢你的人</p></div>
+ <div class="actions"><button class="primary" id="toFinal">还有一句话，想亲口告诉你</button></div>
+</div></section>
+<section class="scene hidden" id="s4"><div class="content">
+ <div class="eyebrow">THE MOST IMPORTANT QUESTION</div>
+ <div class="final-heart">💗</div>
+ <h1>你愿意和我<br>一起收集星星吗？</h1>
+ <p>不必急着回答。<br>无论如何，都谢谢你读到这里。</p>
+ <div class="actions"><button class="primary" id="yes">我愿意，和你一起</button><button class="secondary" id="later">让我再想一想</button></div>
+</div></section>
+<section class="scene hidden" id="s5"><div class="content">
+ <div class="eyebrow">A NEW CHAPTER BEGINS</div><div class="final-heart">💞</div>
+ <h1>那就说好了</h1><p>从今天开始，<br>把每一个普通的日子，<br>都过成值得珍藏的星光。</p>
+ <div class="actions"><button class="primary" id="celebrate">再放一次心动烟花 ✨</button></div>
+</div></section>
+</main>
+<div class="panel"><span class="pill">✦ FOLLOW YOUR HEART</span><span class="pill" id="soundLabel">SOUND OFF</span></div>
+<footer>MADE OF STARDUST & A LITTLE COURAGE</footer><div class="toast" id="toast">你发现了隐藏的心动彩蛋 ✨</div>
+<script>
+(()=>{
+const canvas=document.getElementById('sky'),c=canvas.getContext('2d');let w,h,dpr,stars=[],particles=[],pointer=null,secret=0,scene=1,audio=null,osc=[];
+const $=id=>document.getElementById(id);
+function resize(){dpr=Math.min(devicePixelRatio||1,2);w=innerWidth;h=innerHeight;canvas.width=w*dpr;canvas.height=h*dpr;c.setTransform(dpr,0,0,dpr,0,0);stars=Array.from({length:Math.min(150,Math.floor(w*h/5200))},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.4+.25,a:Math.random()*.65+.15,p:Math.random()*6.28}))}
+function draw(){c.clearRect(0,0,w,h);let t=Date.now()*.001;
+for(const s of stars){c.beginPath();c.arc(s.x,s.y,s.r*(.8+.25*Math.sin(t+s.p)),0,Math.PI*2);c.fillStyle=`rgba(255,225,248,${s.a*(.65+.35*Math.sin(t*1.2+s.p))})`;c.fill()}
+for(let i=particles.length-1;i>=0;i--){let p=particles[i];p.x+=p.vx;p.y+=p.vy;p.vx*=.985;p.vy*=.985;p.life-=.012;c.globalAlpha=Math.max(0,p.life);c.beginPath();c.arc(p.x,p.y,p.r,0,Math.PI*2);c.fillStyle=p.color;c.shadowBlur=14;c.shadowColor=p.color;c.fill();if(p.life<=0)particles.splice(i,1)}c.globalAlpha=1;c.shadowBlur=0;
+if(pointer){let g=c.createRadialGradient(pointer.x,pointer.y,0,pointer.x,pointer.y,95);g.addColorStop(0,'#ffc4e522');g.addColorStop(1,'#ffc4e500');c.fillStyle=g;c.fillRect(pointer.x-95,pointer.y-95,190,190)}
+requestAnimationFrame(draw)}
+function burst(x=w/2,y=h*.45,n=90){for(let i=0;i<n;i++){let a=Math.random()*Math.PI*2,v=Math.random()*4+1;particles.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,r:Math.random()*2.4+1,life:Math.random()*.8+.4,color:['#ffacd5','#e5c2ff','#ffe9c6','#ffffff'][i%4]})}}
+function show(n){scene=n;for(let i=1;i<=5;i++)$('s'+i).classList.toggle('hidden',i!==n);if(n===5)burst(w/2,h*.43,150)}
+function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),2200)}
+function music(){if(audio){audio.resume();return}try{audio=new(window.AudioContext||window.webkitAudioContext)();let master=audio.createGain();master.gain.value=.035;master.connect(audio.destination);[261.63,329.63,392,523.25].forEach((f,i)=>{let o=audio.createOscillator(),g=audio.createGain();o.type='sine';o.frequency.value=f;g.gain.value=i===0?.25:.09;o.connect(g);g.connect(master);o.start();osc.push(o)});$('soundLabel').textContent='SOUND ON'}catch(e){toast('当前浏览器暂不支持声音')}}
+$('begin').onclick=()=>{burst(w/2,h*.44,110);show(2)};
+$('toLetter').onclick=()=>show(3);$('toFinal').onclick=()=>show(4);
+$('yes').onclick=()=>{show(5);music();burst(w/2,h*.45,180)};
+$('later').onclick=()=>toast('没关系，喜欢也可以慢慢来。谢谢你认真读完。');
+$('celebrate').onclick=()=>burst(w/2,h*.45,220);
+$('music').onclick=()=>{music();toast('心跳声已轻轻响起 ♫')};
+$('heartTap').addEventListener('click',()=>{secret++;burst(w/2,h*.45,18);if(secret===7){toast('隐藏彩蛋：你是这片星空最亮的那颗星 ✨');secret=0}});
+canvas.addEventListener('pointerdown',e=>{pointer={x:e.clientX,y:e.clientY};burst(pointer.x,pointer.y,12)});
+canvas.addEventListener('pointermove',e=>{if(pointer){pointer={x:e.clientX,y:e.clientY};if(Math.random()>.45)particles.push({x:pointer.x,y:pointer.y,vx:(Math.random()-.5),vy:(Math.random()-.5),r:Math.random()*2+1,life:.55,color:'#ffd2eb'})}});
+canvas.addEventListener('pointerup',()=>pointer=null);canvas.addEventListener('pointercancel',()=>pointer=null);
+addEventListener('resize',resize);resize();draw();
+})();
+</script>
+</body></html>
