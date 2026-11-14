@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>写给你的一封信</title>
+<style>
+:root{--bg1:#f7efe6;--bg2:#ecd9c8;--paper:#fffaf3;--flap:#f1e2d2;--ink:#3b2a22;--sub:#8a7064;--accent:#b4533a;--accent-ink:#fff;--line:#e6d6c6;--shadow:0 12px 34px rgba(80,50,30,.18);--dot:#e9b98f;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#201813;--bg2:#120d0a;--paper:#2b211b;--flap:#382b23;--ink:#f3e4d6;--sub:#b79a88;--accent:#e08a6c;--accent-ink:#2b211b;--line:#4a3a30;--shadow:0 12px 34px rgba(0,0,0,.5);--dot:#f0c08a}}
+:root[data-theme="dark"]{--bg1:#201813;--bg2:#120d0a;--paper:#2b211b;--flap:#382b23;--ink:#f3e4d6;--sub:#b79a88;--accent:#e08a6c;--accent-ink:#2b211b;--line:#4a3a30;--shadow:0 12px 34px rgba(0,0,0,.5);--dot:#f0c08a}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:radial-gradient(120% 90% at 50% 0%,var(--bg1),var(--bg2));color:var(--ink);font-family:"STKaiti","KaiTi","Songti SC","Noto Serif SC",serif;display:flex;align-items:center;justify-content:center;overflow-x:hidden}
+.stage{width:100%;max-width:440px;padding:20px;text-align:center;position:relative;z-index:2}
+.hide{display:none!important}
+.fade{animation:in 1s ease both}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.dot{position:fixed;bottom:-10px;width:5px;height:5px;border-radius:50%;background:var(--dot);opacity:0;z-index:1;animation:rise linear infinite}
+@keyframes rise{0%{opacity:0;transform:translate(0,0)}15%{opacity:.7}100%{opacity:0;transform:translate(24px,-105vh)}}
+/* envelope */
+#env{cursor:pointer;background:none;border:0;padding:0;color:inherit;font:inherit}
+.envelope{position:relative;width:270px;height:180px;margin:0 auto;background:var(--paper);border:1px solid var(--line);border-radius:6px;box-shadow:var(--shadow);animation:float 3.2s ease-in-out infinite}
+.envelope::before{content:"";position:absolute;inset:0;background:linear-gradient(to bottom right,transparent 49.5%,var(--line) 50%) 0 0/50% 100% no-repeat,linear-gradient(to bottom left,transparent 49.5%,var(--line) 50%) 100% 0/50% 100% no-repeat;border-radius:6px}
+.flap{position:absolute;left:0;right:0;top:0;height:62%;background:var(--flap);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .9s ease,opacity .4s .6s;z-index:3}
+.seal{position:absolute;left:50%;top:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:var(--accent);z-index:4;display:flex;align-items:center;justify-content:center;transition:opacity .4s}
+.seal svg{width:22px;height:22px}
+.paper{position:absolute;left:14px;right:14px;top:14px;bottom:10px;background:var(--paper);border:1px solid var(--line);border-radius:3px;z-index:1;transition:transform .9s .4s ease}
+.opening .flap{transform:rotateX(180deg);opacity:0}
+.opening .seal{opacity:0}
+.opening .paper{transform:translateY(-70px)}
+.opening{animation:none}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.tip{margin-top:30px;color:var(--sub);font-size:1.05rem;letter-spacing:.12em}
+/* letter */
+.letter{background:var(--paper);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow);padding:30px 26px 22px;text-align:left;min-height:260px;
+background-image:repeating-linear-gradient(to bottom,transparent 0 33px,var(--line) 33px 34px);background-position:0 26px}
+.letter p{margin:0 0 20px;font-size:1.12rem;line-height:34px}
+.letter .to{font-size:1.25rem}
+.letter .from{text-align:right;margin:6px 0 0}
+.letter .date{text-align:right;color:var(--sub);font-size:.95rem;margin:0}
+.choices{margin-top:24px;display:flex;flex-direction:column;gap:12px}
+button.c{font:inherit;font-size:1.05rem;border-radius:999px;padding:13px 20px;cursor:pointer;border:1px solid var(--accent);background:transparent;color:var(--accent);transition:transform .15s}
+button.c:active{transform:scale(.97)}
+button.c.main{background:var(--accent);color:var(--accent-ink)}
+button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.skip{margin-top:14px;color:var(--sub);font-size:.85rem;font-family:system-ui,sans-serif}
+.end h1{font-size:1.8rem;margin:0 0 16px;line-height:1.5}
+.end p{color:var(--sub);line-height:2.1;font-size:1.12rem;white-space:pre-line;margin:0}
+.fx{position:fixed;top:-30px;pointer-events:none;z-index:10;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(300deg);opacity:.8}}
+@media (prefers-reduced-motion:reduce){.envelope{animation:none}.dot,.fx{display:none}.flap,.paper,.seal{transition:none}.fade{animation:none}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div id="s1">
+    <button id="env" aria-label="打开信">
+      <div class="envelope" id="evl"><div class="paper"></div><div class="flap"></div><div class="seal"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 21C5 15 2 11.500 2 8a5 5 0 0 1 10-1 5 5 0 0 1 10 1c0 3.500-3 7-10 13z"/></svg></div></div>
+    </button>
+    <div class="tip" id="tip"></div>
+  </div>
+  <div id="s2" class="hide">
+    <div class="letter" id="letter"></div>
+    <div class="choices hide" id="choices">
+      <button class="c main" id="yes"></button>
+      <button class="c" id="wait"></button>
+    </div>
+    <div class="skip" id="skip">轻点屏幕，可以让字出现得快一些</div>
+  </div>
+  <div id="s3" class="hide end"></div>
+</div>
+
+<script>
+/* ===== 只要改这里。越具体、越像你平时说话，越能打动她 ===== */
+var T={
+  name:"小狗",                          /* 她的名字或你平时怎么叫她，如“小糖” */
+  thing:"我那天说的话伤到了你",       /* 你做错了什么，一句话说清楚 */
+  promise:"我会先听你把话说完，再开口", /* 你以后打算怎么做 */
+  sign:"一直在这里的我",               /* 落款，可以写你的名字 */
+  tip:"有一封信，想给你",
+  yes:"我看到了，原谅你了",
+  wait:"我看到了，但我还需要一点时间",
+  yesTitle:"谢谢你 🧡",
+  yesMsg:"谢谢你愿意给我一次机会。\n我会记住这次，好好对你。",
+  waitTitle:"好，我等你",
+  waitMsg:"你想多久都可以。\n我不催你，也不会一直打扰你。\n等你想说话的时候，我都在。"
+};
+T.paras=[
+  "笨蛋小狗，不要不开心了。",
+  "我以后不挂你电话了。",
+  "原谅我吧。"
+];
+/* ======================================================== */
+(function(){
+  function $(i){return document.getElementById(i)}
+  $('tip').textContent=T.tip;$('yes').textContent=T.yes;$('wait').textContent=T.wait;
+  /* 漂浮的小光点 */
+  for(var d=0;d<14;d++){var o=document.createElement('i');o.className='dot';
+    o.style.left=Math.random()*100+'vw';o.style.animationDuration=(9+Math.random()*9)+'s';
+    o.style.animationDelay=(-Math.random()*12)+'s';var z=3+Math.random()*4;o.style.width=o.style.height=z+'px';
+    document.body.appendChild(o)}
+  var L=$('letter'),fast=false,skipped=false;
+  function sleep(ms){return new Promise(function(r){setTimeout(r,fast?Math.min(ms,30):ms)})}
+  function line(cls,txt){var p=document.createElement('p');if(cls)p.className=cls;L.appendChild(p);return p}
+  async function typeInto(p,txt){
+    for(var i=0;i<txt.length;i++){
+      p.textContent=txt.slice(0,i+1);
+      var ch=txt[i];
+      await sleep(/[，。、？！：；]/.test(ch)?380:75);
+    }
+  }
+  async function write(){
+    var to=line('to');await typeInto(to,T.name+"：");await sleep(600);
+    for(var k=0;k<T.paras.length;k++){var p=line();await typeInto(p,T.paras[k]);await sleep(900)}
+    var f=line('from');await typeInto(f,"—— "+T.sign);
+    var n=new Date(),dt=line('date');dt.textContent=n.getFullYear()+"年"+(n.getMonth()+1)+"月"+n.getDate()+"日";
+    dt.classList.add('fade');
+    await sleep(700);
+    $('skip').classList.add('hide');
+    var c=$('choices');c.classList.remove('hide');c.classList.add('fade');
+  }
+  $('env').addEventListener('click',function(){
+    $('evl').classList.add('opening');
+    $('env').disabled=true;
+    setTimeout(function(){
+      $('s1').classList.add('hide');
+      var s=$('s2');s.classList.remove('hide');s.classList.add('fade');
+      write();
+    },1500);
+  });
+  $('s2').addEventListener('click',function(e){if(!e.target.closest('button'))fast=true});
+  function end(t,m){
+    $('s2').classList.add('hide');
+    var s=$('s3');s.classList.remove('hide');s.classList.add('fade');
+    s.innerHTML='<h1></h1><p></p>';
+    s.querySelector('h1').textContent=t;s.querySelector('p').textContent=m;
+  }
+  $('yes').addEventListener('click',function(){
+    end(T.yesTitle,T.yesMsg);
+    var set=['🧡','🌷','✨','💛','🌼'];
+    for(var k=0;k<45;k++){var s=document.createElement('span');
+      s.className='fx';s.textContent=set[k%set.length];
+      s.style.left=Math.random()*100+'vw';s.style.fontSize=(16+Math.random()*20)+'px';
+      s.style.animationDuration=(3+Math.random()*3)+'s';s.style.animationDelay=(Math.random()*1.5)+'s';
+      document.body.appendChild(s)}
+  });
+  $('wait').addEventListener('click',function(){end(T.waitTitle,T.waitMsg)});
+})();
+</script>
+</body>
+</html>
